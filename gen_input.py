@@ -47,6 +47,7 @@ while i < len(all_lines):
 # no vars for 
 f1 = open('var_vals.txt', 'w')
 f1.write(str(n1) + ' ' + str(n2))
+f1.close()
 
 num_vars = (n2**2 + n1**2 + n1*n2)
 num_const = n2**2 + n1**2 + n1 + n1*(n2*(n2-1))/2 + n2*(n1*(n1 - 1)/2) + (n1*(n1-1)*n2*(n2-1))*2
@@ -85,18 +86,21 @@ for i in range(n1):
 	s += '0\n'
 	f.write(s)
 
+f.flush()
 
 for i in range(n1):
 	for j in range(n2):
 		for k in xrange(j+1,n2,1):
 			f.write('-' + getvarno(i,j) + ' -' + getvarno(i,k) + ' 0\n')
 
+f.flush()
 
 for i in range(n2):
 	for j in range(n1):
 		for k in xrange(j+1,n1,1):
 			f.write('-' + getvarno(j,i) + ' -' + getvarno(k,i) + ' 0\n')
 
+f.flush()
 
 def getvar12( x,  j,  i):
 	if x == 1:
@@ -111,5 +115,6 @@ for i in range(n1):
 			for k in range(n2):
 				for l in range(n2):
 					if (k != l):
-						f.write('-' + getvarno(i,k) + ' -' + getvarno(j,l) + ' ' + getvar12(1,i,j) + ' -' + getvar12(2,k,l) + ' 0\n')
-						f.write('-' + getvarno(i,k) + ' -' + getvarno(j,l) + ' -' + getvar12(1,i,j) + ' ' + getvar12(2,k,l) + ' 0\n')
+							f.write('-' + getvarno(i,k) + ' -' + getvarno(j,l) + ' ' + getvar12(1,i,j) + ' -' + getvar12(2,k,l) + ' 0\n')
+							f.write('-' + getvarno(i,k) + ' -' + getvarno(j,l) + ' -' + getvar12(1,i,j) + ' ' + getvar12(2,k,l) + ' 0\n')
+				f.flush()
