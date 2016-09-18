@@ -29,18 +29,31 @@ while i < len(all_lines):
 EdgesG2 = [[0 for i in range(n2)] for j in range(n2)]
 EdgesG1 = [[0 for i in range(n1)] for j in range(n1)]
 
+AdjG2_in = [[] for j in range(n2)]
+AdjG2_out = [[] for j in range(n2)]
+AdjG1_in = [[] for j in range(n1)]
+AdjG1_out = [[] for j in range(n1)]
+
 i = 0
 
 while all_lines[i] != '0 0\n':
 	nos = all_lines[i].split()
-	EdgesG2[int(nos[0]) - 1][int(nos[1]) - 1] = 1
+	x = int(nos[0]) - 1
+	y = int(nos[1]) - 1
+	EdgesG2[x][y] = 1
+	AdjG2_in[y].append(x)
+	AdjG2_out[x].append(y)
 	i += 1
 
 i += 1
 
 while i < len(all_lines):
 	nos = all_lines[i].split()
-	EdgesG1[int(nos[0]) - 1][int(nos[1]) - 1] = 1
+	x = int(nos[0]) - 1
+	y = int(nos[1]) - 1
+	EdgesG1[x][y] = 1
+	AdjG1_in[y].append(x)
+	AdjG1_out[x].append(y)
 	i += 1
 
 # matrices ready!!
@@ -118,3 +131,9 @@ for i in range(n1):
 							if EdgesG2[k][l] != EdgesG1[i][j]:
 								f.write('-' + getvarno(i,k) + ' -' + getvarno(j,l) + ' 0\n')
 				f.flush()
+
+# put some vals of 
+for i in range(n1):
+	for j in range(n2):
+		if len(AdjG2_out[j]) < len(AdjG1_out[i]) or len(AdjG2_in[j]) < len(AdjG1_in[i]) :
+			f.write('-' + getvarno(i,j) + ' 0\n')
