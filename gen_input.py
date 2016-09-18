@@ -49,29 +49,29 @@ f1 = open('var_vals.txt', 'w')
 f1.write(str(n1) + ' ' + str(n2))
 f1.close()
 
-num_vars = (n2**2 + n1**2 + n1*n2)
-num_const = n2**2 + n1**2 + n1 + n1*(n2*(n2-1))/2 + n2*(n1*(n1 - 1)/2) + (n1*(n1-1)*n2*(n2-1))*2
+num_vars = (n1*n2)
+num_const = n1 + n1*(n2*(n2-1))/2 + n2*(n1*(n1 - 1)/2) + (n1*(n1-1)*n2*(n2-1))
 
 f = open('test.satinput', 'w')
 f.write('p cnf ' + str(num_vars) + ' ' + str(num_const) + '\n')
 
 # edges in G1 consts:
-varno = 1
-for i in range(n1):
-	for j in range(n1):
-		if EdgesG1[i][j] == 0:
-			f.write('-' + str(varno) + ' 0\n')
-		else:
-			f.write(str(varno) + ' 0\n')
-		varno += 1
+# varno = 1
+# for i in range(n1):
+# 	for j in range(n1):
+# 		if EdgesG1[i][j] == 0:
+# 			f.write('-' + str(varno) + ' 0\n')
+# 		else:
+# 			f.write(str(varno) + ' 0\n')
+# 		varno += 1
 
-for i in range(n2):
-	for j in range(n2):
-		if EdgesG2[i][j] == 0:
-			f.write('-' + str(varno) + ' 0\n')
-		else:
-			f.write(str(varno) + ' 0\n')
-		varno += 1
+# for i in range(n2):
+# 	for j in range(n2):
+# 		if EdgesG2[i][j] == 0:
+# 			f.write('-' + str(varno) + ' 0\n')
+# 		else:
+# 			f.write(str(varno) + ' 0\n')
+# 		varno += 1
 
 # n2^2 + n1^2 done.
 
@@ -115,6 +115,6 @@ for i in range(n1):
 			for k in range(n2):
 				for l in range(n2):
 					if (k != l):
-							f.write('-' + getvarno(i,k) + ' -' + getvarno(j,l) + ' ' + getvar12(1,i,j) + ' -' + getvar12(2,k,l) + ' 0\n')
-							f.write('-' + getvarno(i,k) + ' -' + getvarno(j,l) + ' -' + getvar12(1,i,j) + ' ' + getvar12(2,k,l) + ' 0\n')
+							if EdgesG2[k][l] != EdgesG1[i][j]:
+								f.write('-' + getvarno(i,k) + ' -' + getvarno(j,l) + ' 0\n')
 				f.flush()
