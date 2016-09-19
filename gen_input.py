@@ -89,13 +89,13 @@ f.write('p cnf ' + str(num_vars) + ' ' + str(num_const) + '\n')
 # n2^2 + n1^2 done.
 
 def getvarno( j,  i):
-	return str(n1**2 + n2**2 + n2*j + i + 1)
+	return str(n2*j + i + 1)
 
 
 for i in range(n1):
 	s = ''
 	for j in range(n2):
-		s += (getvarno(i,j) + ' ')
+		s += ('-' + getvarno(i,j) + ' ')
 	s += '0\n'
 	f.write(s)
 
@@ -104,22 +104,22 @@ f.flush()
 for i in range(n1):
 	for j in range(n2):
 		for k in xrange(j+1,n2,1):
-			f.write('-' + getvarno(i,j) + ' -' + getvarno(i,k) + ' 0\n')
+			f.write(getvarno(i,j) + ' ' + getvarno(i,k) + ' 0\n')
 
 f.flush()
 
 for i in range(n2):
 	for j in range(n1):
 		for k in xrange(j+1,n1,1):
-			f.write('-' + getvarno(j,i) + ' -' + getvarno(k,i) + ' 0\n')
+			f.write(getvarno(j,i) + ' ' + getvarno(k,i) + ' 0\n')
 
 f.flush()
 
-def getvar12( x,  j,  i):
-	if x == 1:
-		return str(j*n1 + i + 1)
-	else:
-		return str(n1**2 + j*n2 + i + 1)
+# def getvar12( x,  j,  i):
+# 	if x == 1:
+# 		return str(j*n1 + i + 1)
+# 	else:
+# 		return str(n1**2 + j*n2 + i + 1)
 
 
 for i in range(n1):
@@ -129,11 +129,13 @@ for i in range(n1):
 				for l in range(n2):
 					if (k != l):
 							if EdgesG2[k][l] != EdgesG1[i][j]:
-								f.write('-' + getvarno(i,k) + ' -' + getvarno(j,l) + ' 0\n')
+								f.write(getvarno(i,k) + ' ' + getvarno(j,l) + ' 0\n')
 				f.flush()
 
 # put some vals of 
-for i in range(n1):
-	for j in range(n2):
-		if len(AdjG2_out[j]) < len(AdjG1_out[i]) or len(AdjG2_in[j]) < len(AdjG1_in[i]) :
-			f.write('-' + getvarno(i,j) + ' 0\n')
+
+
+# for i in range(n1):
+# 	for j in range(n2):
+# 		if len(AdjG2_out[j]) < len(AdjG1_out[i]) or len(AdjG2_in[j]) < len(AdjG1_in[i]) :
+# 			f.write('-' + getvarno(i,j) + ' 0\n')

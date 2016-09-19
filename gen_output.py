@@ -18,13 +18,12 @@ else :
 	vals = all_lines[1].split()
 
 	# Start from line nos n1^2 + n2^2 ->
-	i = n1**2 + n2**2
-	j = i
+	i = 0
 
 	while i < len(vals) - 1:
 		vv = int(vals[i]) 
-		if vv > 0 :
-			v = vv - j
+		if vv < 0 :
+			v = -1*vv
 			q = (v/n2)+1;
 			r = (v % n2);
 			if r == 0:
