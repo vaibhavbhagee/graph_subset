@@ -92,28 +92,7 @@ def getvarno( j,  i):
 	return str(n2*j + i + 1)
 
 
-for i in range(n1):
-	s = ''
-	for j in range(n2):
-		s += ('-' + getvarno(i,j) + ' ')
-	s += '0\n'
-	f.write(s)
 
-f.flush()
-
-for i in range(n1):
-	for j in range(n2):
-		for k in xrange(j+1,n2,1):
-			f.write(getvarno(i,j) + ' ' + getvarno(i,k) + ' 0\n')
-
-f.flush()
-
-for i in range(n2):
-	for j in range(n1):
-		for k in xrange(j+1,n1,1):
-			f.write(getvarno(j,i) + ' ' + getvarno(k,i) + ' 0\n')
-
-f.flush()
 
 # def getvar12( x,  j,  i):
 # 	if x == 1:
@@ -122,20 +101,50 @@ f.flush()
 # 		return str(n1**2 + j*n2 + i + 1)
 
 
+
+# put some vals of 
+NotPoss = {}
+
+for i in range(n1):
+	for j in range(n2):
+		if len(AdjG2_out[j]) < len(AdjG1_out[i]) or len(AdjG2_in[j]) < len(AdjG1_in[i]) :
+			NotPoss[(i,j)] = True;
+
+# now we know the ones that are not possible.
+
+for i in range(n1):
+	s = ''
+	for j in range(n2):
+		if (i,j) not in NotPoss:
+			s += ('-' + getvarno(i,j) + ' ')
+	s += '0\n'
+	f.write(s)
+
+f.flush()
+
+for i in range(n1):
+	for j in range(n2):
+		for k in xrange(j+1,n2,1):
+			if (i,j) not in NotPoss and (i,k) not in NotPoss:
+				f.write(getvarno(i,j) + ' ' + getvarno(i,k) + ' 0\n')
+
+f.flush()
+
+for i in range(n2):
+	for j in range(n1):
+		for k in xrange(j+1,n1,1):
+			if (j,i) not in NotPoss and (k,i) not in NotPoss:
+				f.write(getvarno(j,i) + ' ' + getvarno(k,i) + ' 0\n')
+
+f.flush()
+
+
 for i in range(n1):
 	for j in range(n1):
 		if i != j:
 			for k in range(n2):
 				for l in range(n2):
 					if (k != l):
-							if EdgesG2[k][l] != EdgesG1[i][j]:
+							if EdgesG2[k][l] != EdgesG1[i][j] and (i,k) not in NotPoss and (j,l) not in NotPoss:
 								f.write(getvarno(i,k) + ' ' + getvarno(j,l) + ' 0\n')
 				f.flush()
-
-# put some vals of 
-
-
-# for i in range(n1):
-# 	for j in range(n2):
-# 		if len(AdjG2_out[j]) < len(AdjG1_out[i]) or len(AdjG2_in[j]) < len(AdjG1_in[i]) :
-# 			f.write('-' + getvarno(i,j) + ' 0\n')
