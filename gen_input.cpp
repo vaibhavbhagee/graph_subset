@@ -6,6 +6,8 @@
 #include <unordered_set>
 #include <algorithm>
 #include <string.h>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace std;
 typedef long long ll;
@@ -122,9 +124,10 @@ int main(int argc, char *argv[])
 		fout.close();
 
 		// file ready.
-		ofstream ffout;
-		ffout.open(strcat((argv[1]) , ".satinput"));
-		ffout << "p cnf " << n1*n2 << " " << (n1 + n1*(n2*(n2-1))/2 + n2*(n1*(n1-1))/2 + n1*(n1-1)*n2*(n2-1)/1) << std::endl;
+		FILE * fp;
+		fp = fopen(strcat((argv[1]) , ".satinput"),"w");
+		// ffout.open();
+		fprintf(fp, "p cnf %lld %lld\n", n1*n2, (n1 + n1*(n2*(n2-1))/2 + n2*(n1*(n1-1))/2 + n1*(n1-1)*n2*(n2-1)/4));
 
 
 		std::unordered_set<pair<ll,ll>, pairhash > NotPoss;
@@ -147,7 +150,7 @@ int main(int argc, char *argv[])
 					s += "-" + to_string(getvarno(n2,i,j)) + " ";
 			}
 			s += "0\n";
-			ffout << s;
+			fprintf(fp, "%s", s.c_str());
 		}
 
 		for (int i = 0 ; i < n1 ; i ++)
@@ -159,7 +162,7 @@ int main(int argc, char *argv[])
 					pair<ll,ll> p1 = std::make_pair(i,j);
 					pair<ll,ll> p2 = std::make_pair(i,k);
 					if (NotPoss.find(p1) == NotPoss.end() && NotPoss.find(p2) == NotPoss.end())
-						ffout << getvarno(n2,i,j) << " " << getvarno(n2,i,k) << " 0\n";
+						fprintf(fp, "%lld %lld 0\n", getvarno(n2,i,j), getvarno(n2,i,k));
 				}
 			}
 		}
@@ -173,7 +176,7 @@ int main(int argc, char *argv[])
 					pair<ll,ll> p1 = std::make_pair(j,i);
 					pair<ll,ll> p2 = std::make_pair(k,i);
 					if (NotPoss.find(p1) == NotPoss.end() && NotPoss.find(p2) == NotPoss.end())
-						ffout << getvarno(n2,j,i) << " " << getvarno(n2,k,i) << " 0\n";
+						fprintf(fp, "%lld %lld 0\n", getvarno(n2,j,i), getvarno(n2,k,i));
 				}
 			}
 		}
@@ -193,7 +196,7 @@ int main(int argc, char *argv[])
 								pair<ll,ll> ik = std::make_pair(i,k);
 								pair<ll,ll> jl = std::make_pair(j,l);
 								if (EdgesG2[k][l] != EdgesG1[i][j] && NotPoss.find(ik) == NotPoss.end() && NotPoss.find(jl) == NotPoss.end())
-									ffout << getvarno(n2,i,k) << " " << getvarno(n2,j,l) << " 0\n";
+									fprintf(fp, "%lld %lld 0\n", getvarno(n2,i,k), getvarno(n2,j,l));
 							}
 						}
 					}
@@ -201,7 +204,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		ffout.close();
+		fclose(fp);
 		infile.close();
 	}
 	return 0;
