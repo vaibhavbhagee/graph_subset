@@ -1,6 +1,7 @@
-var_vals.txt
-test.graphs
-test.mapping
-test.satinput
-test.satoutput
+*.txt
+*.graphs
+*.mapping
+*.satinput
+*.satoutput
+a.out
 minisat
