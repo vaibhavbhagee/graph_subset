@@ -155,6 +155,10 @@ for i in range(n1):
 						for x in AdjG2_out[k]:
 							f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
 
+for p in NotPoss:
+	(x,y) = p
+	f.write(getvarno(x,y)+" 0\n")
+
 				# for l in range(n2):
 				# 	if (k != l):
 				# 			if EdgesG2[k][l] != EdgesG1[i][j] and (i,k) not in NotPoss and (j,l) not in NotPoss:
