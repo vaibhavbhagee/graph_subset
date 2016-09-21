@@ -1,5 +1,8 @@
 #!/usr/bin/python
 # coding=utf-8
+import time
+
+start_time = time.time();
 
 f = open('test.graphs', 'r')
 
@@ -120,7 +123,7 @@ for i in range(n1):
 	s += '0\n'
 	f.write(s)
 
-f.flush()
+# f.flush()
 
 for i in range(n1):
 	for j in range(n2):
@@ -128,7 +131,7 @@ for i in range(n1):
 			if (i,j) not in NotPoss and (i,k) not in NotPoss:
 				f.write(getvarno(i,j) + ' ' + getvarno(i,k) + ' 0\n')
 
-f.flush()
+# f.flush()
 
 for i in range(n2):
 	for j in range(n1):
@@ -136,17 +139,20 @@ for i in range(n2):
 			if (j,i) not in NotPoss and (k,i) not in NotPoss:
 				f.write(getvarno(j,i) + ' ' + getvarno(k,i) + ' 0\n')
 
-f.flush()
+# f.flush()
 
 
 for i in range(n1):
 	for j in range(n1):
 		if i != j:
 			for k in range(n2):
+	# print time.time() - start_time
+	# print "Loop for i finished"
+	# print i
 				if (i,k) not in NotPoss:
 					if EdgesG1[i][j]:
 						s = ""
-						s = s + getvarno(i,k)+" "
+						s = s + getvarno(i,k) + " "
 						for x in AdjG2_out[k]:
 							s+="-"+getvarno(j,x)+" "
 						s+="0\n"
@@ -164,3 +170,6 @@ for p in NotPoss:
 				# 			if EdgesG2[k][l] != EdgesG1[i][j] and (i,k) not in NotPoss and (j,l) not in NotPoss:
 				# 				f.write(getvarno(i,k) + ' ' + getvarno(j,l) + ' 0\n')
 				# f.flush()
+	print time.time() - start_time
+	print "Loop for i finished"
+	print i
