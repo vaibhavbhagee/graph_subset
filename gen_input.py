@@ -154,12 +154,14 @@ for i in range(n1):
 						s = ""
 						s = s + getvarno(i,k) + " "
 						for x in AdjG2_out[k]:
-							s+="-"+getvarno(j,x)+" "
+							if (j,x) not in NotPoss:
+								s+="-"+getvarno(j,x)+" "
 						s+="0\n"
 						f.write(s)
 					else:
 						for x in AdjG2_out[k]:
-							f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
+							if (j,x) not in NotPoss:
+								f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
 
 for p in NotPoss:
 	(x,y) = p
@@ -170,6 +172,6 @@ for p in NotPoss:
 				# 			if EdgesG2[k][l] != EdgesG1[i][j] and (i,k) not in NotPoss and (j,l) not in NotPoss:
 				# 				f.write(getvarno(i,k) + ' ' + getvarno(j,l) + ' 0\n')
 				# f.flush()
-	print time.time() - start_time
-	print "Loop for i finished"
-	print i
+	# print time.time() - start_time
+	# print "Loop for i finished"
+	# print i
