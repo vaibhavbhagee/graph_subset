@@ -119,7 +119,7 @@ for i in range(n1):
 	s = ''
 	for j in range(n2):
 		if (i,j) not in NotPoss:
-			s += (getvarno(i,j) + ' ')
+			s += ('-' + getvarno(i,j) + ' ')
 	s += '0\n'
 	f.write(s)
 
@@ -129,7 +129,7 @@ for i in range(n1):
 	for j in range(n2):
 		for k in xrange(j+1,n2,1):
 			if (i,j) not in NotPoss and (i,k) not in NotPoss:
-				f.write('-' + getvarno(i,j) + ' -' + getvarno(i,k) + ' 0\n')
+				f.write(getvarno(i,j) + ' ' + getvarno(i,k) + ' 0\n')
 
 # f.flush()
 
@@ -151,20 +151,20 @@ for i in range(n1):
 				if (i,k) not in NotPoss:
 					if EdgesG1[i][j]:
 						s = ""
-						s = s + "-" + getvarno(i,k) + " "
+						s = s + getvarno(i,k) + " "
 						for x in AdjG2_out[k]:
 							if (j,x) not in NotPoss:
-								s+=getvarno(j,x)+" "
+								s+="-"+getvarno(j,x)+" "
 						s+="0\n"
 						f.write(s)
 					else:
 						for x in AdjG2_out[k]:
 							if (j,x) not in NotPoss:
-								f.write("-" + getvarno(i,k)+" -"+getvarno(j,x)+" 0\n")
+								f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
 
 for p in NotPoss:
 	(x,y) = p
-	f.write("-" + getvarno(x,y)+" 0\n")
+	f.write(getvarno(x,y)+" 0\n")
 
 print time.time() - start_time
 				# for l in range(n2):
