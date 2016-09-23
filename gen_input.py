@@ -190,7 +190,7 @@ for i in range(n1):
 
 n2sorted = sorted(noclauses.items(), key=lambda x:x[1])
 
-rnum = random.randint(2*n2/5,7*n2/8)
+rnum = random.randint(8*n2/10,9*n2/10)
 print rnum
 
 for yo in xrange(0,rnum,1):
