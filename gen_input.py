@@ -18,17 +18,44 @@ n2 = 0
 n1 = 0
 i = 0
 
+NodeMapG1 = {}
+NodeMapG2 = {}
+
+f1 = open('var_vals.txt', 'w')
+
 while all_lines[i] != '0 0\n':
 	nos = all_lines[i].split()
-	n2 = max(n2,int(nos[0]), int(nos[1]))
+	x = int(nos[0])
+	y = int(nos[1])
+	if (x not in NodeMapG2):
+		NodeMapG2[x] = n2
+		f1.write(str(n2) + " " + str(x) + "\n")
+		n2 += 1
+	if (y not in NodeMapG2):
+		NodeMapG2[y] = n2
+		f1.write(str(n2) + " " + str(y) + "\n")
+		n2 += 1
 	i += 1
 
+f1.write("HEHE\n")
 i += 1
 
 while i < len(all_lines):
 	nos = all_lines[i].split()
-	n1 = max(n1,int(nos[0]), int(nos[1]))
+	x = int(nos[0])
+	y = int(nos[1])
+	if (x not in NodeMapG1):
+		NodeMapG1[x] = n1
+		f1.write(str(n1) + " " + str(x) + "\n")
+		n1 += 1
+	if (y not in NodeMapG1):
+		NodeMapG1[y] = n1
+		f1.write(str(n1) + " " + str(y) + "\n")
+		n1 += 1
 	i += 1
+
+f1.close()
+
 
 EdgesG2 = [[0 for i in range(n2)] for j in range(n2)]
 EdgesG1 = [[0 for i in range(n1)] for j in range(n1)]
@@ -55,8 +82,8 @@ i = 0
 
 while all_lines[i] != '0 0\n':
 	nos = all_lines[i].split()
-	x = int(nos[0]) - 1
-	y = int(nos[1]) - 1
+	x = NodeMapG2[int(nos[0])]
+	y = NodeMapG2[int(nos[1])]
 	EdgesG2[x][y] = 1
 	AdjG2_in[y].append(x)
 	AdjG2_out[x].append(y)
@@ -72,8 +99,8 @@ i += 1
 
 while i < len(all_lines):
 	nos = all_lines[i].split()
-	x = int(nos[0]) - 1
-	y = int(nos[1]) - 1
+	x = NodeMapG1[int(nos[0])]
+	y = NodeMapG1[int(nos[1])]
 	EdgesG1[x][y] = 1
 	AdjG1_in[y].append(x)
 	AdjG1_out[x].append(y)
@@ -81,9 +108,6 @@ while i < len(all_lines):
 
 # matrices ready!!
 # no vars for 
-f1 = open('var_vals.txt', 'w')
-f1.write(str(n1) + ' ' + str(n2))
-f1.close()
 
 num_vars = (n1*n2)
 num_const = n1 + n1*(n2*(n2-1))/2 + n2*(n1*(n1 - 1)/2) + (n1*(n1-1)*n2*(n2-1))

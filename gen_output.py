@@ -4,11 +4,26 @@ f = open('test.satoutput','r')
 all_lines = list(f)
 
 f1 = open('var_vals.txt', 'r')
-l = f1.readline()
-ll = l.split()
+all_nodes = list(f1)
 
-n1 = int(ll[0])
-n2 = int(ll[1])
+RevMapG1 = {}
+RevMapG2 = {}
+
+i = 0
+while (all_nodes[i] != "HEHE\n"):
+	nos = all_nodes[i].split()
+	x = int(nos[0])
+	y = int(nos[1])
+	RevMapG2[x] = y
+
+i += 1
+
+while (i < len(all_nodes)):
+	nos = all_nodes[i].split();
+	x = int(nos[0])
+	y = int(nos[1])
+	RevMapG1[x] = y
+
 
 f2 = open('test.mapping','w');
 
@@ -19,15 +34,11 @@ else :
 
 	# Start from line nos n1^2 + n2^2 ->
 	i = 0
-
 	while i < len(vals) - 1:
 		vv = int(vals[i]) 
 		if vv < 0 :
 			v = -1*vv
-			q = (v/n2)+1;
+			q = (v/n2);
 			r = (v % n2);
-			if r == 0:
-				r += n2
-				q -= 1
-			f2.write(str(q)+' '+str(r)+'\n')
+			f2.write(str(RevMapG1[q])+' '+str(RevMapG2[r])+'\n')
 		i += 1
