@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # coding=utf-8
 import time
+import random
 
 start_time = time.time();
 
@@ -160,6 +161,10 @@ for i in range(n2):
 
 # f.flush()
 
+noclauses = {}
+for i in xrange(n2):
+	noclauses[i] = 0
+
 for i in range(n1):
 	for j in range(n1):
 		for k in range(n2):
@@ -172,16 +177,24 @@ for i in range(n1):
 					s = s + getvarno(i,k) + " "
 					for x in AdjG2_out[k]:
 						if (j,x) not in NotPoss:
+							noclauses[x] += 1
 							s+="-"+getvarno(j,x)+" "
 					s+="0\n"
 					f.write(s)
 				else:
 					for x in AdjG2_out[k]:
 						if (j,x) not in NotPoss:
+							noclauses[k] += 1
+							noclauses[x] += 1
 							f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
 
+n2sorted = sorted(noclauses.items(), key=lambda x:x[1])
 
-for x in range(n2):
+rnum = random.randint(2*n2/5,7*n2/8)
+print rnum
+
+for yo in xrange(0,rnum,1):
+	x = n2sorted[yo][0]
 	for y in G2_out_not[x]:
 		if y != x:
 			for i in range(n1):
