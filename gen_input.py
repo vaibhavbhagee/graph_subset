@@ -37,13 +37,20 @@ AdjG2_out = [[] for j in range(n2)]
 AdjG1_in = [[] for j in range(n1)]
 AdjG1_out = [[] for j in range(n1)]
 
-n2_all = set()
+
+G2_out_not = {}
 for i in range(n2):
+	x = set()
+	for j in range(n2):
+		if j != i:
+			x.add(j)
+	G2_out_not[i] = x
 
-
-G2_out_not = [n2_all for j in range(n2)]
 
 i = 0
+
+# for j in G2_out_not[0]:
+# 	print j
 
 while all_lines[i] != '0 0\n':
 	nos = all_lines[i].split()
@@ -52,8 +59,13 @@ while all_lines[i] != '0 0\n':
 	EdgesG2[x][y] = 1
 	AdjG2_in[y].append(x)
 	AdjG2_out[x].append(y)
-	G2_out_not[x].pop(y,None)
+	print x
+	G2_out_not[x].remove(y)
 	i += 1
+
+# print "------FINAL------ \n"
+# for j in G2_out_not[0]:
+# 	print j
 
 i += 1
 
@@ -150,28 +162,27 @@ for i in range(n2):
 
 for i in range(n1):
 	for j in range(n1):
-		if i != j:
-			for k in range(n2):
-	# print time.time() - start_time
-	# print "Loop for i finished"
-	# print i
-				if (i,k) not in NotPoss:
-					if EdgesG1[i][j]:
-						s = ""
-						s = s + getvarno(i,k) + " "
-						for x in AdjG2_out[k]:
-							if (j,x) not in NotPoss:
-								s+="-"+getvarno(j,x)+" "
-						s+="0\n"
-						f.write(s)
-					else:
-						for x in AdjG2_out[k]:
-							if (j,x) not in NotPoss:
-								f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
+		for k in range(n2):
+# print time.time() - start_time
+# print "Loop for i finished"
+# print i
+			if (i,k) not in NotPoss:
+				if EdgesG1[i][j]:
+					s = ""
+					s = s + getvarno(i,k) + " "
+					for x in AdjG2_out[k]:
+						if (j,x) not in NotPoss:
+							s+="-"+getvarno(j,x)+" "
+					s+="0\n"
+					f.write(s)
+				else:
+					for x in AdjG2_out[k]:
+						if (j,x) not in NotPoss:
+							f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
 
 
 for x in range(n2):
-	for y in G2_out_not[x].keys():
+	for y in G2_out_not[x]:
 		if y != x:
 			for i in range(n1):
 				if (i,x) not in NotPoss:
