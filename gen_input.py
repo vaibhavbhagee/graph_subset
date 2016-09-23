@@ -135,30 +135,30 @@ for i in range(n1):
 
 # now we know the ones that are not possible.
 # eliminate more!
-for zz in range(2*n1):
-	x = zz%n1
+for zz in range(11*n1):
+	i = zz%n1
 	for j in range(n2):
 		ilist = AdjG1_out[i]
 		leni = len(ilist)
 		jlist = AdjG2_out[j]
 		lenj = len(jlist)
 
-		if (i,j) not in NotPoss and lenj < 15 and leni <= 8:
+		if (i,j) not in NotPoss and lenj < 40 and leni <= 20:
 			# still possible :p Hmmmmmmmm...
 			# ith corresponds to ilist[i]
-			yolist = {}
+			onlyone = set()
 			for x in range(leni):
 				y = set()
 				for m in range(lenj):
-					if (ilist[x], jlist[m]) not in NotPoss:
+					if (ilist[x], jlist[m]) not in NotPoss and jlist[m] not in onlyone:
 						y.add(jlist[m])
-				yolist[x] = y
-			# x = xth out of i.
-
-			for x in range(leni):
-				if len(yolist[x]) == 0:
+				if len(y) == 0:
+					print "NICE -------------- \n"
 					NotPoss[(i,j)] = True
 					break
+				if len(y) == 1:
+					onlyone.add(y.pop())
+			# x = xth out of i.
 
 
 for i in range(n1):
