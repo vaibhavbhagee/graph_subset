@@ -9,8 +9,8 @@ f = open('test.graphs', 'r')
 
 all_lines = list(f)
 
-for line in all_lines:
-	print line
+# for line in all_lines:
+# 	print line
 
 # u have the file now.
 
@@ -60,7 +60,7 @@ while all_lines[i] != '0 0\n':
 	EdgesG2[x][y] = 1
 	AdjG2_in[y].append(x)
 	AdjG2_out[x].append(y)
-	print x
+	# print x
 	G2_out_not[x].remove(y)
 	i += 1
 
@@ -134,6 +134,32 @@ for i in range(n1):
 			NotPoss[(i,j)] = True;
 
 # now we know the ones that are not possible.
+# eliminate more!
+for zz in range(2*n1):
+	x = zz%n1
+	for j in range(n2):
+		ilist = AdjG1_out[i]
+		leni = len(ilist)
+		jlist = AdjG2_out[j]
+		lenj = len(jlist)
+
+		if (i,j) not in NotPoss and lenj < 15 and leni <= 8:
+			# still possible :p Hmmmmmmmm...
+			# ith corresponds to ilist[i]
+			yolist = {}
+			for x in range(leni):
+				y = set()
+				for m in range(lenj):
+					if (ilist[x], jlist[m]) not in NotPoss:
+						y.add(jlist[m])
+				yolist[x] = y
+			# x = xth out of i.
+
+			for x in range(leni):
+				if len(yolist[x]) == 0:
+					NotPoss[(i,j)] = True
+					break
+
 
 for i in range(n1):
 	s = ''
@@ -161,9 +187,6 @@ for i in range(n2):
 
 # f.flush()
 
-noclauses = {}
-for i in xrange(n2):
-	noclauses[i] = 0
 
 for i in range(n1):
 	for j in range(n1):
@@ -177,24 +200,21 @@ for i in range(n1):
 					s = s + getvarno(i,k) + " "
 					for x in AdjG2_out[k]:
 						if (j,x) not in NotPoss:
-							noclauses[x] += 1
+							# noclauses[x] += 1
 							s+="-"+getvarno(j,x)+" "
 					s+="0\n"
 					f.write(s)
 				else:
 					for x in AdjG2_out[k]:
 						if (j,x) not in NotPoss:
-							noclauses[k] += 1
-							noclauses[x] += 1
+							# noclauses[k] += 1
+							# noclauses[x] += 1
 							f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
 
-n2sorted = sorted(noclauses.items(), key=lambda x:x[1])
+# n2sorted = sorted(noclauses.items(), key=lambda x:x[1])
 
-rnum = random.randint(2*n2/5,7*n2/8)
-print rnum
 
-for yo in xrange(0,rnum,1):
-	x = n2sorted[yo][0]
+for x in range(n2):
 	for y in G2_out_not[x]:
 		if y != x:
 			for i in range(n1):
