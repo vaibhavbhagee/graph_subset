@@ -162,11 +162,16 @@ for i in range(n1):
 							if (j,x) not in NotPoss:
 								f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
 
+for p in NotPoss:
+	(x,y) = p
+	f.write(getvarno(x,y)+" 0\n")
+
+print time.time() - start_time
 				# for l in range(n2):
 				# 	if (k != l):
 				# 			if EdgesG2[k][l] != EdgesG1[i][j] and (i,k) not in NotPoss and (j,l) not in NotPoss:
 				# 				f.write(getvarno(i,k) + ' ' + getvarno(j,l) + ' 0\n')
 				# f.flush()
-	print time.time() - start_time
-	print "Loop for i finished"
-	print i
+	# print time.time() - start_time
+	# print "Loop for i finished"
+	# print i
