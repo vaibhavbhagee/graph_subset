@@ -22,8 +22,8 @@ else :
 
 	while i < len(vals) - 1:
 		vv = int(vals[i]) 
-		if vv > 0 :
-			v = vv
+		if vv < 0 :
+			v = -1*vv
 			q = (v/n2)+1;
 			r = (v % n2);
 			if r == 0:
