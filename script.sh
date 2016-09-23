@@ -1,7 +1,8 @@
 #! /bin/bash
 
-python generate.py $1 $2 $3 $4 > test.graphs
-python gen_input.py
-./minisat test.satinput test.satoutput
-python gen_output.py
-python check.py test.graphs test.mapping
+python generate.py $1 $2 $3 $4 > $5.graphs
+./compile.sh
+./run1.sh $5
+./minisat $5.satinput $5.satoutput
+./run2.sh $5
+python check.py $5.graphs $5.mapping

@@ -1,7 +1,8 @@
+import sys
+filename = sys.argv[1]
 
-
-f = open('test.satoutput','r')
-f2 = open('test.mapping','w');
+f = open(filename+'.satoutput','r')
+f2 = open(filename+'.mapping','w');
 all_lines = list(f)
 
 if all_lines[0] == "UNSAT\n" :

@@ -1,11 +1,14 @@
 #!/usr/bin/python
 # coding=utf-8
+import sys
 import time
 import random
 
 start_time = time.time();
 
-f = open('test.graphs', 'r')
+filename = sys.argv[1]
+
+f = open(filename+'.graphs', 'r')
 
 all_lines = list(f)
 
@@ -112,7 +115,7 @@ while i < len(all_lines):
 num_vars = (n1*n2)
 num_const = n1 + n1*(n2*(n2-1))/2 + n2*(n1*(n1 - 1)/2) + (n1*(n1-1)*n2*(n2-1))
 
-f = open('test.satinput', 'w')
+f = open(filename+'.satinput', 'w')
 f.write('p cnf ' + str(num_vars) + ' ' + str(num_const) + '\n')
 
 # edges in G1 consts:
@@ -159,7 +162,7 @@ for i in range(n1):
 
 # now we know the ones that are not possible.
 # eliminate more!
-for zz in range(11*n1):
+for zz in range(9*n1):
 	i = zz%n1
 	for j in range(n2):
 		ilist = AdjG1_out[i]
@@ -177,7 +180,7 @@ for zz in range(11*n1):
 					if (ilist[x], jlist[m]) not in NotPoss and jlist[m] not in onlyone:
 						y.add(jlist[m])
 				if len(y) == 0:
-					print "NICE -------------- \n"
+					# print "NICE -------------- \n"
 					NotPoss[(i,j)] = True
 					break
 				if len(y) == 1:
