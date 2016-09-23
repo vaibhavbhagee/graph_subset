@@ -37,6 +37,12 @@ AdjG2_out = [[] for j in range(n2)]
 AdjG1_in = [[] for j in range(n1)]
 AdjG1_out = [[] for j in range(n1)]
 
+n2_all = {}
+for i in range(n2):
+	n2_all[i] = True
+
+G2_out_not = [n2_all for j in range(n2)]
+
 i = 0
 
 while all_lines[i] != '0 0\n':
@@ -46,6 +52,7 @@ while all_lines[i] != '0 0\n':
 	EdgesG2[x][y] = 1
 	AdjG2_in[y].append(x)
 	AdjG2_out[x].append(y)
+	G2_out_not[x].pop(y,None)
 	i += 1
 
 i += 1
@@ -161,6 +168,17 @@ for i in range(n1):
 						for x in AdjG2_out[k]:
 							if (j,x) not in NotPoss:
 								f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
+
+for x in range(n2):
+	for y in G2_out_not[x].keys():
+		if y != x:
+			for i in range(n1):
+				if (i,x) not in NotPoss:
+					for i_adj in AdjG1_out[i]:
+						if (i_adj,y) not in NotPoss:
+							f.write(getvarno(i,x) + " " + getvarno(i_adj,y) + " 0\n")
+
+
 
 for p in NotPoss:
 	(x,y) = p
