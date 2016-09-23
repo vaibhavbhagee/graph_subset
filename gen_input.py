@@ -37,9 +37,9 @@ AdjG2_out = [[] for j in range(n2)]
 AdjG1_in = [[] for j in range(n1)]
 AdjG1_out = [[] for j in range(n1)]
 
-n2_all = {}
+n2_all = set()
 for i in range(n2):
-	n2_all[i] = True
+
 
 G2_out_not = [n2_all for j in range(n2)]
 
@@ -168,6 +168,7 @@ for i in range(n1):
 						for x in AdjG2_out[k]:
 							if (j,x) not in NotPoss:
 								f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
+
 
 for x in range(n2):
 	for y in G2_out_not[x].keys():
