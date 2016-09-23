@@ -141,7 +141,6 @@ for i in range(n2):
 
 # f.flush()
 
-
 for i in range(n1):
 	for j in range(n1):
 		if i != j:
@@ -154,12 +153,14 @@ for i in range(n1):
 						s = ""
 						s = s + getvarno(i,k) + " "
 						for x in AdjG2_out[k]:
-							s+="-"+getvarno(j,x)+" "
+							if (j,x) not in NotPoss:
+								s+="-"+getvarno(j,x)+" "
 						s+="0\n"
 						f.write(s)
 					else:
 						for x in AdjG2_out[k]:
-							f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
+							if (j,x) not in NotPoss:
+								f.write(getvarno(i,k)+" "+getvarno(j,x)+" 0\n")
 
 				# for l in range(n2):
 				# 	if (k != l):
